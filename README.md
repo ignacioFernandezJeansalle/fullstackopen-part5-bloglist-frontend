@@ -8,7 +8,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 
 ### Ejercicios
 
-- [ ] 5.1 => a: Iniciar sesión en la interfaz
+- [x] 5.1 => a: Iniciar sesión en la interfaz
 - [ ] 5.2 => a: Iniciar sesión en la interfaz
 - [ ] 5.3 => a: Iniciar sesión en la interfaz
 - [ ] 5.4 => a: Iniciar sesión en la interfaz
