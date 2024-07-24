@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import FormLogin from "./components/FormLogin";
+import Blog from "./components/Blog";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -31,7 +32,7 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
-      console.log("Wrong credentials");
+      console.log("Wrong credentials", error);
     }
   };
 
@@ -48,30 +49,13 @@ const App = () => {
 
       <main>
         {user === null ? (
-          <form onSubmit={handleLogin}>
-            <h2>Please log in to app</h2>
-            <div>
-              <label htmlFor="login-username">Username: </label>
-              <input
-                id="login-username"
-                type="text"
-                value={username}
-                name="username"
-                onChange={({ target }) => setUsername(target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="login-password">Password: </label>
-              <input
-                id="login-password"
-                type="text"
-                value={password}
-                name="password"
-                onChange={({ target }) => setPassword(target.value)}
-              />
-            </div>
-            <button type="submit">Login</button>
-          </form>
+          <FormLogin
+            username={username}
+            setUsername={setUsername}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+          />
         ) : (
           <section>
             <h2>{user.name} logged in</h2>
