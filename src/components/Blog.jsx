@@ -1,7 +1,8 @@
 export default function Blog({ blog }) {
   return (
     <div>
-      {blog.title} {blog.author}
+      <hr />
+      <p>{`${blog.title} - ${blog.author} - (${blog.url})`}</p>
     </div>
   );
 }
