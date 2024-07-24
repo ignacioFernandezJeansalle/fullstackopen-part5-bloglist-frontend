@@ -3,6 +3,7 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import FormLogin from "./components/FormLogin";
 import FormCreateNewBlog from "./components/FormCreateNewBlog";
+import Message from "./components/Message";
 import Blog from "./components/Blog";
 
 const EMPTY_BLOG = { title: "", author: "", url: "" };
@@ -13,6 +14,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState(EMPTY_BLOG);
+  const [message, setMessage] = useState(null);
 
   const getAndSetBlogs = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -40,7 +42,7 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
-      console.log("Wrong credentials", error);
+      handleMessage("Wrong credentials", true);
     }
   };
 
@@ -53,12 +55,20 @@ const App = () => {
     event.preventDefault();
 
     try {
-      await blogService.create(newBlog, user.token);
+      const response = await blogService.create(newBlog, user.token);
+      handleMessage(`A new blog: ${response.title} by ${response.author}`, false);
       setNewBlog(EMPTY_BLOG);
       getAndSetBlogs();
     } catch (error) {
-      console.log("Error create new post", error);
+      handleMessage("Error create new blog", true);
     }
+  };
+
+  const handleMessage = (message, isError) => {
+    setMessage({ message, isError });
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
   };
 
   return (
@@ -68,6 +78,7 @@ const App = () => {
       </header>
 
       <main>
+        <Message {...message} />
         {user === null ? (
           <FormLogin
             username={username}

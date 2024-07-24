@@ -11,7 +11,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 - [x] 5.1 => a: Iniciar sesión en la interfaz
 - [x] 5.2 => a: Iniciar sesión en la interfaz
 - [x] 5.3 => a: Iniciar sesión en la interfaz
-- [ ] 5.4 => a: Iniciar sesión en la interfaz
+- [x] 5.4 => a: Iniciar sesión en la interfaz
 - [ ] 5.5 => b: props.children y proptypes
 - [ ] 5.6 => b: props.children y proptypes
 - [ ] 5.7 => b: props.children y proptypes
