@@ -94,7 +94,11 @@ const App = () => {
               <button onClick={handleLogout}>Logout</button>
             </section>
 
-            <FormCreateNewBlog newBlog={newBlog} setNewBlog={setNewBlog} handleCreateNewBlog={handleCreateNewBlog} />
+            <FormCreateNewBlog
+              newBlog={newBlog}
+              handleChangeNewBlog={(newBlog) => setNewBlog(newBlog)}
+              handleSubmit={handleCreateNewBlog}
+            />
 
             <section>
               <h2>Blogs:</h2>
