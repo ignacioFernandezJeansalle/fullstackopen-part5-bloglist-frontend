@@ -82,10 +82,10 @@ const App = () => {
         {user === null ? (
           <FormLogin
             username={username}
-            setUsername={setUsername}
             password={password}
-            setPassword={setPassword}
-            handleLogin={handleLogin}
+            handleChangeUsername={({ target }) => setUsername(target.value)}
+            handleChangePassword={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
           />
         ) : (
           <>
