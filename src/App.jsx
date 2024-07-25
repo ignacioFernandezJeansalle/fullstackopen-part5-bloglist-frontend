@@ -20,12 +20,8 @@ const App = () => {
   const [message, setMessage] = useState(null);
   const formBlogRef = useRef();
 
-  const getAndSetBlogs = () => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  };
-
   useEffect(() => {
-    getAndSetBlogs();
+    blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
 
   useEffect(() => {
@@ -62,7 +58,7 @@ const App = () => {
       const response = await blogService.create(newBlog, user.token);
       handleMessage(`A new blog: ${response.title} by ${response.author}`, false);
       setNewBlog(EMPTY_BLOG);
-      getAndSetBlogs();
+      setBlogs(blogs.concat(response));
       formBlogRef.current.toggleVisibility();
     } catch (error) {
       handleMessage("Error create new blog", true);
