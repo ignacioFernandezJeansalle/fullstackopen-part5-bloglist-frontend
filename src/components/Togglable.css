@@ -1,0 +1,9 @@
+.togglable {
+  margin-block: 16px;
+  border: 1px solid #bbb;
+  padding: var(--padding-section);
+}
+
+.togglable .cancel {
+  margin-top: 8px;
+}
