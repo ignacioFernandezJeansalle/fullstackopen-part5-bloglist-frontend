@@ -1,8 +1,7 @@
 export default function Blog({ blog }) {
   return (
-    <div>
-      <hr />
-      <p>{`${blog.title} - ${blog.author} - (${blog.url})`}</p>
-    </div>
+    <li
+      style={{ paddingBlock: "6px", borderTop: "1px solid #ccc" }}
+    >{`${blog.title} - ${blog.author} - (${blog.url})`}</li>
   );
 }
