@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --padding-section: 8px 16px;
+}
+
+header {
+  background: #bbb;
+  padding: var(--padding-section);
+}
+
+main {
+  background: #eee;
+  padding: var(--padding-section);
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 8px;
+}
+
+form {
+  border: 1px solid #bbb;
+  padding: var(--padding-section);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 8px;
+}
+
+button {
+  padding: 4px 8px;
+  background: #bbb;
+  border: 1px solid #999;
+}
+
+button:hover {
+  background: #ccc;
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+.user-info {
+  border: 1px solid #bbb;
+  padding: var(--padding-section);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info > h2,
+.user-info > button {
+  margin: 0;
+}
+
+.list-of-blogs {
+  border: 1px solid #bbb;
+  padding: var(--padding-section);
+}
