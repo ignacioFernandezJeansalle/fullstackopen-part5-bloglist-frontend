@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import "./App.css";
+
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import FormLogin from "./components/FormLogin";
-import FormCreateNewBlog from "./components/FormCreateNewBlog";
+import FormBlog from "./components/FormBlog";
+import Togglable from "./components/Togglable";
 import Message from "./components/Message";
 import Blog from "./components/Blog";
 
@@ -15,6 +18,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState(EMPTY_BLOG);
   const [message, setMessage] = useState(null);
+  const formBlogRef = useRef();
 
   const getAndSetBlogs = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -59,6 +63,7 @@ const App = () => {
       handleMessage(`A new blog: ${response.title} by ${response.author}`, false);
       setNewBlog(EMPTY_BLOG);
       getAndSetBlogs();
+      formBlogRef.current.toggleVisibility();
     } catch (error) {
       handleMessage("Error create new blog", true);
     }
@@ -89,22 +94,26 @@ const App = () => {
           />
         ) : (
           <>
-            <section>
-              <h2>{user.name} logged in</h2>
+            <section className="user-info">
+              <h2>{user.name}</h2>
               <button onClick={handleLogout}>Logout</button>
             </section>
 
-            <FormCreateNewBlog
-              newBlog={newBlog}
-              handleChangeNewBlog={(newBlog) => setNewBlog(newBlog)}
-              handleSubmit={handleCreateNewBlog}
-            />
+            <Togglable buttonLabel="Create new blog" ref={formBlogRef}>
+              <FormBlog
+                newBlog={newBlog}
+                handleChangeNewBlog={(newBlog) => setNewBlog(newBlog)}
+                handleSubmit={handleCreateNewBlog}
+              />
+            </Togglable>
 
-            <section>
-              <h2>Blogs:</h2>
-              {blogs.map((blog) => (
-                <Blog key={blog.id} blog={blog} />
-              ))}
+            <section className="list-of-blogs">
+              <h2>Blogs</h2>
+              <ul>
+                {blogs.map((blog) => (
+                  <Blog key={blog.id} blog={blog} />
+                ))}
+              </ul>
             </section>
           </>
         )}
