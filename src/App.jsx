@@ -96,7 +96,7 @@ const App = () => {
             <section className="list-of-blogs">
               <h2>Blogs</h2>
               <ul>
-                {blogs.map((blog) => (
+                {blogs.toReversed().map((blog) => (
                   <Blog key={blog.id} blog={blog} />
                 ))}
               </ul>
