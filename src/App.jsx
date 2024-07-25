@@ -9,14 +9,11 @@ import Togglable from "./components/Togglable";
 import Message from "./components/Message";
 import Blog from "./components/Blog";
 
-const EMPTY_BLOG = { title: "", author: "", url: "" };
-
 const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
-  const [newBlog, setNewBlog] = useState(EMPTY_BLOG);
   const [message, setMessage] = useState(null);
   const formBlogRef = useRef();
 
@@ -51,13 +48,10 @@ const App = () => {
     setUser(null);
   };
 
-  const handleCreateNewBlog = async (event) => {
-    event.preventDefault();
-
+  const addNewBlog = async (newBlog) => {
     try {
       const response = await blogService.create(newBlog, user.token);
       handleMessage(`A new blog: ${response.title} by ${response.author}`, false);
-      setNewBlog(EMPTY_BLOG);
       setBlogs(blogs.concat(response));
       formBlogRef.current.toggleVisibility();
     } catch (error) {
@@ -96,11 +90,7 @@ const App = () => {
             </section>
 
             <Togglable buttonLabel="Create new blog" ref={formBlogRef}>
-              <FormBlog
-                newBlog={newBlog}
-                handleChangeNewBlog={(newBlog) => setNewBlog(newBlog)}
-                handleSubmit={handleCreateNewBlog}
-              />
+              <FormBlog handleSubmit={addNewBlog} />
             </Togglable>
 
             <section className="list-of-blogs">

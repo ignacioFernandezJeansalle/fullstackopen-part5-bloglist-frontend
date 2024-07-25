@@ -1,39 +1,45 @@
-export default function FormBlog({ newBlog, handleChangeNewBlog, handleSubmit }) {
+import { useState } from "react";
+
+export default function FormBlog({ handleSubmit }) {
+  const EMPTY_BLOG = { title: "", author: "", url: "" };
   const KEY_TITLE = "title";
   const KEY_AUTHOR = "author";
   const KEY_URL = "url";
 
-  const handleChangeDataNewBlog = () => {
+  const [blog, setBlog] = useState(EMPTY_BLOG);
+
+  const handleChangeData = () => {
     const $form = document.getElementById("form-blog");
     const $formData = new FormData($form);
 
-    handleChangeNewBlog({
+    setBlog({
       title: $formData.get(KEY_TITLE),
       author: $formData.get(KEY_AUTHOR),
       url: $formData.get(KEY_URL),
     });
   };
 
+  const createBlog = (event) => {
+    event.preventDefault();
+
+    handleSubmit(blog);
+    setBlog(EMPTY_BLOG);
+  };
+
   return (
-    <form id="form-blog" onSubmit={handleSubmit}>
+    <form id="form-blog" onSubmit={createBlog}>
       <h2>Create new blog</h2>
       <div>
         <label htmlFor="blog-title">Title: </label>
-        <input id="blog-title" type="text" value={newBlog.title} name={KEY_TITLE} onChange={handleChangeDataNewBlog} />
+        <input id="blog-title" type="text" value={blog.title} name={KEY_TITLE} onChange={handleChangeData} />
       </div>
       <div>
         <label htmlFor="blog-author">Author: </label>
-        <input
-          id="blog-author"
-          type="text"
-          value={newBlog.author}
-          name={KEY_AUTHOR}
-          onChange={handleChangeDataNewBlog}
-        />
+        <input id="blog-author" type="text" value={blog.author} name={KEY_AUTHOR} onChange={handleChangeData} />
       </div>
       <div>
         <label htmlFor="blog-url">url: </label>
-        <input id="blog-url" type="text" value={newBlog.url} name={KEY_URL} onChange={handleChangeDataNewBlog} />
+        <input id="blog-url" type="text" value={blog.url} name={KEY_URL} onChange={handleChangeData} />
       </div>
 
       <button type="submit">Create</button>
