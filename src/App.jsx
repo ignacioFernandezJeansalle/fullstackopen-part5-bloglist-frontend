@@ -59,6 +59,20 @@ const App = () => {
     }
   };
 
+  const removeBlog = async (id, title, author) => {
+    if (!window.confirm(`Do you really want to remove ${title} by ${author}?`)) return;
+
+    try {
+      const removedBlog = await blogService.remove(id, user.token);
+      handleMessage(`The blog ${removedBlog.title} by ${removedBlog.author} has been deleted`, false);
+
+      const newBlogs = blogs.filter((blog) => blog.id !== removedBlog.id);
+      setBlogs(newBlogs);
+    } catch (error) {
+      handleMessage("Error delete blog", true);
+    }
+  };
+
   const handleMessage = (message, isError) => {
     setMessage({ message, isError });
     setTimeout(() => {
@@ -134,7 +148,7 @@ const App = () => {
               <h2>Blogs</h2>
               <ul>
                 {sortBlogsByLikes(blogs).map((blog) => (
-                  <Blog key={blog.id} blog={blog} addLike={addLike} />
+                  <Blog key={blog.id} blog={blog} addLike={addLike} user={user} remove={removeBlog} />
                 ))}
               </ul>
             </section>
