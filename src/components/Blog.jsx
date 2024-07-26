@@ -15,13 +15,21 @@ export default function Blog({ blog }) {
 
       {visible && (
         <div className="content">
-          <p>{blog.url}</p>
+          <p>
+            <i>link:</i> {blog.url}
+          </p>
           <span>
-            <p>likes: {blog.likes}</p>
+            <p>
+              <i>likes:</i> {blog.likes}
+            </p>
             <button>Like</button>
           </span>
-
-          <p>{blog.author}</p>
+          <p>
+            <i>author:</i> {blog.author}
+          </p>
+          <p>
+            <i>user:</i> {blog.user.name}
+          </p>
         </div>
       )}
     </li>
