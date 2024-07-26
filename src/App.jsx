@@ -66,6 +66,25 @@ const App = () => {
     }, 5000);
   };
 
+  const addLike = async (id, currentLikes) => {
+    try {
+      const likes = { likes: currentLikes + 1 };
+      const updatedBlog = await blogService.updateLikes(id, likes, user.token);
+
+      const newBlogs = blogs.map((blog) => {
+        if (blog.id === updatedBlog.id) {
+          return updatedBlog;
+        }
+
+        return blog;
+      });
+
+      setBlogs(newBlogs);
+    } catch (error) {
+      handleMessage("Error update likes", true);
+    }
+  };
+
   return (
     <>
       <header>
@@ -97,7 +116,7 @@ const App = () => {
               <h2>Blogs</h2>
               <ul>
                 {blogs.toReversed().map((blog) => (
-                  <Blog key={blog.id} blog={blog} />
+                  <Blog key={blog.id} blog={blog} addLike={addLike} />
                 ))}
               </ul>
             </section>

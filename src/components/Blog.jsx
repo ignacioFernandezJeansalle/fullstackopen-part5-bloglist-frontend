@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Blog.css";
 
-export default function Blog({ blog }) {
+export default function Blog({ blog, addLike }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ export default function Blog({ blog }) {
             <p>
               <i>likes:</i> {blog.likes}
             </p>
-            <button>Like</button>
+            <button onClick={() => addLike(blog.id, blog.likes)}>Like</button>
           </span>
           <p>
             <i>author:</i> {blog.author}
