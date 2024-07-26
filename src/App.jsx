@@ -50,9 +50,9 @@ const App = () => {
 
   const addNewBlog = async (newBlog) => {
     try {
-      const response = await blogService.create(newBlog, user.token);
-      handleMessage(`A new blog: ${response.title} by ${response.author}`, false);
-      setBlogs(blogs.concat(response));
+      const addedBlog = await blogService.create(newBlog, user.token);
+      handleMessage(`A new blog: ${addedBlog.title} by ${addedBlog.author}`, false);
+      setBlogs(blogs.concat(addedBlog));
       formBlogRef.current.toggleVisibility();
     } catch (error) {
       handleMessage("Error create new blog", true);
