@@ -24,3 +24,11 @@
 .bloglist-item .content span button {
   padding: 2px;
 }
+
+.bloglist-item .content .remove {
+  margin-top: 12px;
+  padding: 2px 4px;
+  background: #c00;
+  border: 1px solid #800;
+  color: #fff;
+}

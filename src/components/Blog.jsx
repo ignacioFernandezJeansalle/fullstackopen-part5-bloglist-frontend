@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Blog.css";
 
-export default function Blog({ blog, addLike }) {
+export default function Blog({ blog, addLike, user, remove }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -30,6 +30,17 @@ export default function Blog({ blog, addLike }) {
           <p>
             <i>user:</i> {blog.user.name}
           </p>
+
+          {blog.user.id === user.id && (
+            <button
+              onClick={() => {
+                remove(blog.id, blog.title, blog.author);
+              }}
+              className="remove"
+            >
+              Remove
+            </button>
+          )}
         </div>
       )}
     </li>
