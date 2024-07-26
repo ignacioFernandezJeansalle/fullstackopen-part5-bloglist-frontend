@@ -9,16 +9,25 @@ const getAll = () => {
   return axios.get(baseUrl).then((response) => response.data);
 };
 
+const getById = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 const create = async (blog, token) => {
   const headers = getHeaders(token);
   const response = await axios.post(baseUrl, blog, headers);
-  return response.data;
+
+  const createdBlog = await getById(response.data.id);
+  return createdBlog;
 };
 
 const updateLikes = async (id, likes, token) => {
   const headers = getHeaders(token);
   const response = await axios.put(`${baseUrl}/${id}`, likes, headers);
-  return response.data;
+
+  const updatedBlog = await getById(response.data.id);
+  return updatedBlog;
 };
 
 export default { getAll, create, updateLikes };

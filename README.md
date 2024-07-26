@@ -16,7 +16,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 - [x] 5.6 => b: props.children y proptypes
 - [x] 5.7 => b: props.children y proptypes
 - [x] 5.8 => b: props.children y proptypes
-- [ ] 5.9 => b: props.children y proptypes
+- [x] 5.9 => b: props.children y proptypes
 - [ ] 5.10 => b: props.children y proptypes
 - [ ] 5.11 => b: props.children y proptypes
 - [ ] 5.12 => b: props.children y proptypes
