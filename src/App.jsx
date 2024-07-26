@@ -85,6 +85,24 @@ const App = () => {
     }
   };
 
+  const sortBlogsByLikes = (blogs) => {
+    const copyOfBlogs = structuredClone(blogs);
+    const smallestToLargest = false;
+
+    copyOfBlogs.sort((a, b) => {
+      if (a.likes > b.likes) {
+        return smallestToLargest ? 1 : -1;
+      }
+      if (a.likes < b.likes) {
+        return smallestToLargest ? -1 : 1;
+      }
+
+      return 0;
+    });
+
+    return copyOfBlogs;
+  };
+
   return (
     <>
       <header>
@@ -115,7 +133,7 @@ const App = () => {
             <section className="list-of-blogs">
               <h2>Blogs</h2>
               <ul>
-                {blogs.toReversed().map((blog) => (
+                {sortBlogsByLikes(blogs).map((blog) => (
                   <Blog key={blog.id} blog={blog} addLike={addLike} />
                 ))}
               </ul>
