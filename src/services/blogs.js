@@ -22,6 +22,13 @@ const create = async (blog, token) => {
   return createdBlog;
 };
 
+const remove = async (id, token) => {
+  const headers = getHeaders(token);
+  const response = await axios.delete(`${baseUrl}/${id}`, headers);
+
+  return response.data;
+};
+
 const updateLikes = async (id, likes, token) => {
   const headers = getHeaders(token);
   const response = await axios.put(`${baseUrl}/${id}`, likes, headers);
@@ -30,4 +37,4 @@ const updateLikes = async (id, likes, token) => {
   return updatedBlog;
 };
 
-export default { getAll, create, updateLikes };
+export default { getAll, create, remove, updateLikes };
