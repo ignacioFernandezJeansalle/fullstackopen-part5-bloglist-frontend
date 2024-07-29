@@ -1,4 +1,6 @@
-export default function FormLogin({ username, password, handleChangeUsername, handleChangePassword, handleSubmit }) {
+import PropTypes from "prop-types";
+
+const FormLogin = ({ username, password, handleChangeUsername, handleChangePassword, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
@@ -13,4 +15,14 @@ export default function FormLogin({ username, password, handleChangeUsername, ha
       <button type="submit">Login</button>
     </form>
   );
-}
+};
+
+FormLogin.propTypes = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  handleChangeUsername: PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+export default FormLogin;

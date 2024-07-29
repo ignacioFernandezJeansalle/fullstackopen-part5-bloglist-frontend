@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 
-export default function FormBlog({ handleSubmit }) {
+const FormBlog = ({ handleSubmit }) => {
   const EMPTY_BLOG = { title: "", author: "", url: "" };
   const KEY_TITLE = "title";
   const KEY_AUTHOR = "author";
@@ -45,4 +46,10 @@ export default function FormBlog({ handleSubmit }) {
       <button type="submit">Create</button>
     </form>
   );
-}
+};
+
+FormBlog.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+export default FormBlog;
