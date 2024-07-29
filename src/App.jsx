@@ -125,9 +125,6 @@ const App = () => {
     <>
       <header>
         <h1>Blogs app</h1>
-        <Togglable buttonLabel="PRUEBA">
-          <p>Hola</p>
-        </Togglable>
       </header>
 
       <main>
