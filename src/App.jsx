@@ -39,6 +39,7 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (error) {
+      console.log(error);
       handleMessage("Wrong credentials", true);
     }
   };
@@ -55,6 +56,7 @@ const App = () => {
       setBlogs(blogs.concat(addedBlog));
       formBlogRef.current.toggleVisibility();
     } catch (error) {
+      console.log(error);
       handleMessage("Error create new blog", true);
     }
   };
@@ -69,6 +71,7 @@ const App = () => {
       const newBlogs = blogs.filter((blog) => blog.id !== removedBlog.id);
       setBlogs(newBlogs);
     } catch (error) {
+      console.log(error);
       handleMessage("Error delete blog", true);
     }
   };
@@ -95,6 +98,7 @@ const App = () => {
 
       setBlogs(newBlogs);
     } catch (error) {
+      console.log(error);
       handleMessage("Error update likes", true);
     }
   };
@@ -121,6 +125,9 @@ const App = () => {
     <>
       <header>
         <h1>Blogs app</h1>
+        <Togglable buttonLabel="PRUEBA">
+          <p>Hola</p>
+        </Togglable>
       </header>
 
       <main>
@@ -148,7 +155,7 @@ const App = () => {
               <h2>Blogs</h2>
               <ul>
                 {sortBlogsByLikes(blogs).map((blog) => (
-                  <Blog key={blog.id} blog={blog} addLike={addLike} user={user} remove={removeBlog} />
+                  <Blog key={blog.id} blog={blog} user={user} addLike={addLike} remove={removeBlog} />
                 ))}
               </ul>
             </section>
