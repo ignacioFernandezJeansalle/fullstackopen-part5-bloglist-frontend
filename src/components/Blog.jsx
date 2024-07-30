@@ -11,7 +11,9 @@ const Blog = ({ blog, user, addLike, remove }) => {
         <p>
           <b>{blog.title.toUpperCase()}</b> - {blog.author}
         </p>
-        <button onClick={() => setVisible(!visible)}>{visible ? "Hide" : "View"}</button>
+        <button onClick={() => setVisible(!visible)} data-testid="view-button">
+          {visible ? "Hide" : "View"}
+        </button>
       </div>
 
       {visible && (
@@ -23,7 +25,9 @@ const Blog = ({ blog, user, addLike, remove }) => {
             <p>
               <i>likes:</i> {blog.likes}
             </p>
-            <button onClick={() => addLike(blog.id, blog.likes)}>Like</button>
+            <button onClick={() => addLike(blog.id, blog.likes)} data-testid="like-button">
+              Like
+            </button>
           </span>
           <p>
             <i>user:</i> {blog.user.name}
