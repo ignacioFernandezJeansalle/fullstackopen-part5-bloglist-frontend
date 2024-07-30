@@ -39,6 +39,7 @@ const Blog = ({ blog, user, addLike, remove }) => {
                 remove(blog.id, blog.title, blog.author);
               }}
               className="remove"
+              data-testid="remove-button"
             >
               Remove
             </button>
