@@ -20,7 +20,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 - [x] 5.10 => b: props.children y proptypes
 - [x] 5.11 => b: props.children y proptypes
 - [x] 5.12 => b: props.children y proptypes
-- [ ] 5.13 => c: Probando aplicaciones React
+- [x] 5.13 => c: Probando aplicaciones React
 - [ ] 5.14 => c: Probando aplicaciones React
 - [ ] 5.15 => c: Probando aplicaciones React
 - [ ] 5.16 => c: Probando aplicaciones React
