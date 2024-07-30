@@ -23,7 +23,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 - [x] 5.13 => c: Probando aplicaciones React
 - [x] 5.14 => c: Probando aplicaciones React
 - [x] 5.15 => c: Probando aplicaciones React
-- [ ] 5.16 => c: Probando aplicaciones React
+- [x] 5.16 => c: Probando aplicaciones React
 - [ ] 5.17 => d: Pruebas de extremo a extremo: Playwright
 - [ ] 5.18 => d: Pruebas de extremo a extremo: Playwright
 - [ ] 5.19 => d: Pruebas de extremo a extremo: Playwright
