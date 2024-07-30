@@ -43,7 +43,9 @@ const FormBlog = ({ handleSubmit }) => {
         <input id="blog-url" type="text" value={blog.url} name={KEY_URL} onChange={handleChangeData} />
       </div>
 
-      <button type="submit">Create</button>
+      <button type="submit" data-testid="submit-button">
+        Create
+      </button>
     </form>
   );
 };
