@@ -45,8 +45,9 @@ describe("<Blog />", () => {
 
   test("clicking the button view, render url and likes", async () => {
     const user = userEvent.setup();
-    const buttonView = screen.getByText("View");
-    await user.click(buttonView);
+
+    const $viewButton = screen.getByTestId("view-button");
+    await user.click($viewButton);
 
     const $content = container.querySelector(SELECTOR_CONTENT);
     expect($content).toBeDefined();
@@ -57,12 +58,24 @@ describe("<Blog />", () => {
   test("clicking twice on the like button calls event handler twice", async () => {
     const user = userEvent.setup();
 
-    const buttonView = screen.getByTestId("view-button");
-    await user.click(buttonView);
+    const $viewButton = screen.getByTestId("view-button");
+    await user.click($viewButton);
 
-    const likeButton = screen.getByTestId("like-button");
-    await user.click(likeButton);
-    await user.click(likeButton);
+    const $likeButton = screen.getByTestId("like-button");
+    await user.click($likeButton);
+    await user.click($likeButton);
     expect(ADD_LIKE.mock.calls).toHaveLength(2);
+  });
+
+  test("clicking the button remove call event handler", async () => {
+    const user = userEvent.setup();
+
+    const $viewButton = screen.getByTestId("view-button");
+    await user.click($viewButton);
+
+    const $removeButton = screen.getByTestId("remove-button");
+    await user.click($removeButton);
+
+    expect(REMOVE.mock.calls).toHaveLength(1);
   });
 });
