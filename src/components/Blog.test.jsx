@@ -1,5 +1,6 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Blog from "./Blog";
 
 describe("<Blog />", () => {
@@ -11,22 +12,28 @@ describe("<Blog />", () => {
     author: "Blog author",
     url: "Blog url",
     likes: 8,
+    user: {
+      id: "6695284bd188ca441201f47e",
+      name: "Ignacio Fernández Jeansalle",
+      username: "admin",
+    },
   };
 
   const USER = {
     id: "6695284bd188ca441201f47e",
     name: "Ignacio Fernández Jeansalle",
     username: "admin",
-    /* token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI2Njk1Mjg0YmQxODhjYTQ0MTIwMWY0N2UiLCJpYXQiOjE3MjIyNjQzOTF9.ICKiuv9sB0ou5lAuVK7pU30WYaBi_T7O1B44iE9pdFc", */
   };
 
   const ADD_LIKE = vi.fn();
   const REMOVE = vi.fn();
 
-  test("at start render title and author, not url and likes", () => {
-    const { container } = render(<Blog blog={BLOG} user={USER} addLike={ADD_LIKE} remove={REMOVE} />);
+  let container;
+  beforeEach(() => {
+    container = render(<Blog blog={BLOG} user={USER} addLike={ADD_LIKE} remove={REMOVE} />).container;
+  });
 
+  test("at start render title and author, not url and likes", () => {
     const $title = container.querySelector(SELECTOR_TITLE);
     expect($title).toBeDefined();
     expect($title).toHaveTextContent(BLOG.title);
@@ -34,5 +41,16 @@ describe("<Blog />", () => {
 
     const $content = container.querySelector(SELECTOR_CONTENT);
     expect($content).toBeNull();
+  });
+
+  test("clicking the button view, render url and likes", async () => {
+    const user = userEvent.setup();
+    const buttonView = screen.getByText("View");
+    await user.click(buttonView);
+
+    const $content = container.querySelector(SELECTOR_CONTENT);
+    expect($content).toBeDefined();
+    expect($content).toHaveTextContent(BLOG.url);
+    expect($content).toHaveTextContent(BLOG.likes);
   });
 });
