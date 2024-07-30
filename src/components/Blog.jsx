@@ -9,7 +9,7 @@ const Blog = ({ blog, user, addLike, remove }) => {
     <li className="bloglist-item">
       <div className="title">
         <p>
-          <b>{blog.title}</b>
+          <b>{blog.title.toUpperCase()}</b> - {blog.author}
         </p>
         <button onClick={() => setVisible(!visible)}>{visible ? "Hide" : "View"}</button>
       </div>
@@ -25,9 +25,6 @@ const Blog = ({ blog, user, addLike, remove }) => {
             </p>
             <button onClick={() => addLike(blog.id, blog.likes)}>Like</button>
           </span>
-          <p>
-            <i>author:</i> {blog.author}
-          </p>
           <p>
             <i>user:</i> {blog.user.name}
           </p>
