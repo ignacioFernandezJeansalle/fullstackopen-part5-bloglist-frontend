@@ -34,7 +34,8 @@ describe("Blogs app", () => {
       await page.getByTestId("password").fill(USER_TEST.password);
       await page.getByRole("button", { name: "Login" }).click();
 
-      await expect(page.getByText(USER_TEST.name)).toBeVisible();
+      const userInfo = page.locator(".user-info");
+      await expect(userInfo).toContainText(USER_TEST.name);
     });
 
     test("fails with wrong credentials", async ({ page }) => {
@@ -42,7 +43,11 @@ describe("Blogs app", () => {
       await page.getByTestId("password").fill(USER_TEST.password + "xxx");
       await page.getByRole("button", { name: "Login" }).click();
 
-      await expect(page.getByText("Wrong credentials")).toBeVisible();
+      const notification = page.locator(".notification");
+      await expect(notification).toContainText("Wrong credentials");
+      await expect(notification).toHaveCSS("border-style", "solid");
+      await expect(notification).toHaveCSS("color", "rgb(255, 0, 0)");
+      await expect(page.getByText(USER_TEST.name)).not.toBeVisible();
     });
   });
 });
