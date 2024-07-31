@@ -6,11 +6,25 @@ const FormLogin = ({ username, password, handleChangeUsername, handleChangePassw
       <h2>Login</h2>
       <div>
         <label htmlFor="login-username">Username: </label>
-        <input id="login-username" type="text" value={username} name="username" onChange={handleChangeUsername} />
+        <input
+          data-testid="username"
+          id="login-username"
+          type="text"
+          value={username}
+          name="username"
+          onChange={handleChangeUsername}
+        />
       </div>
       <div>
         <label htmlFor="login-password">Password: </label>
-        <input id="login-password" type="password" value={password} name="password" onChange={handleChangePassword} />
+        <input
+          data-testid="password"
+          id="login-password"
+          type="password"
+          value={password}
+          name="password"
+          onChange={handleChangePassword}
+        />
       </div>
       <button type="submit">Login</button>
     </form>
