@@ -1,4 +1,5 @@
 import { describe, beforeEach, test, expect } from "@playwright/test";
+import helper from "./helper";
 
 const USER_TEST = {
   name: "e2e user",
@@ -8,12 +9,12 @@ const USER_TEST = {
 
 describe("Blogs app", () => {
   beforeEach(async ({ page, request }) => {
-    await request.post("http://localhost:3003/api/testing/reset");
-    await request.post("http://localhost:3003/api/users", {
+    await request.post("/api/testing/reset");
+    await request.post("/api/users", {
       data: USER_TEST,
     });
 
-    await page.goto("http://localhost:5173");
+    await page.goto("/");
   });
 
   test("front page can be opened and has title", async ({ page }) => {
@@ -30,18 +31,14 @@ describe("Blogs app", () => {
 
   describe("Login", () => {
     test("succeeds with correct credentials", async ({ page }) => {
-      await page.getByTestId("username").fill(USER_TEST.username);
-      await page.getByTestId("password").fill(USER_TEST.password);
-      await page.getByRole("button", { name: "Login" }).click();
+      await helper.loginWith(page, USER_TEST.username, USER_TEST.password);
 
       const userInfo = page.locator(".user-info");
       await expect(userInfo).toContainText(USER_TEST.name);
     });
 
     test("fails with wrong credentials", async ({ page }) => {
-      await page.getByTestId("username").fill(USER_TEST.username);
-      await page.getByTestId("password").fill(USER_TEST.password + "xxx");
-      await page.getByRole("button", { name: "Login" }).click();
+      await helper.loginWith(page, USER_TEST.username, "wrongPassword");
 
       const notification = page.locator(".notification");
       await expect(notification).toContainText("Wrong credentials");
