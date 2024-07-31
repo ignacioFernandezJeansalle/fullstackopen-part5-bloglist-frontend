@@ -1,9 +1,11 @@
-import { describe, test, expect } from "@playwright/test";
+import { describe, beforeEach, test, expect } from "@playwright/test";
 
 describe("Blogs app", () => {
-  test("front page can be opened and has title", async ({ page }) => {
+  beforeEach(async ({ page }) => {
     await page.goto("http://localhost:5173");
+  });
 
+  test("front page can be opened and has title", async ({ page }) => {
     const locator = page.getByText("Blogs app");
     await expect(locator).toBeVisible();
 
@@ -11,8 +13,6 @@ describe("Blogs app", () => {
   });
 
   test("login form is displayed", async ({ page }) => {
-    await page.goto("http://localhost:5173");
-
     const locator = page.getByRole("heading", { name: "Login" });
     await expect(locator).toBeVisible();
   });
