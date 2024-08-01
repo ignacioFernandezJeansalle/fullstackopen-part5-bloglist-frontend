@@ -4,4 +4,13 @@ const loginWith = async (page, username, password) => {
   await page.getByRole("button", { name: "Login" }).click();
 };
 
-export default { loginWith };
+const createBlog = async (page, blog) => {
+  await page.getByRole("button", { name: "Create new blog" }).click();
+
+  await page.getByTestId("title").fill(blog.title);
+  await page.getByTestId("author").fill(blog.author);
+  await page.getByTestId("url").fill(blog.url);
+  await page.getByTestId("submit-button").click();
+};
+
+export default { loginWith, createBlog };
