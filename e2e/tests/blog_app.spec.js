@@ -7,6 +7,12 @@ const USER_TEST = {
   password: "e2ePassword",
 };
 
+const NEW_BLOG = {
+  title: "new test blog title",
+  author: "new test blog author",
+  url: "www.newblogtest.com",
+};
+
 describe("Blogs app", () => {
   beforeEach(async ({ page, request }) => {
     await request.post("/api/testing/reset");
@@ -54,18 +60,7 @@ describe("Blogs app", () => {
     });
 
     test("a new blog can be created", async ({ page }) => {
-      const NEW_BLOG = {
-        title: "new test blog title",
-        author: "new test blog author",
-        url: "www.newblogtest.com",
-      };
-
-      await page.getByRole("button", { name: "Create new blog" }).click();
-
-      await page.getByTestId("title").fill(NEW_BLOG.title);
-      await page.getByTestId("author").fill(NEW_BLOG.author);
-      await page.getByTestId("url").fill(NEW_BLOG.url);
-      await page.getByTestId("submit-button").click();
+      await helper.createBlog(page, NEW_BLOG);
 
       const notification = page.locator(".notification");
       await expect(notification).toContainText(`A new blog: ${NEW_BLOG.title} by ${NEW_BLOG.author}`);
@@ -75,7 +70,26 @@ describe("Blogs app", () => {
       const blog = page
         .getByRole("listitem")
         .filter({ hasText: `${NEW_BLOG.title.toUpperCase()} - ${NEW_BLOG.author}` });
+
       await expect(blog).toBeVisible();
+    });
+
+    test("a blog can be edited", async ({ page }) => {
+      await helper.createBlog(page, NEW_BLOG);
+
+      const blog = page
+        .getByRole("listitem")
+        .filter({ hasText: `${NEW_BLOG.title.toUpperCase()} - ${NEW_BLOG.author}` });
+
+      await blog.getByTestId("view-button").click();
+
+      const likesAtStart = blog.getByText("likes: 0");
+      await expect(likesAtStart).toBeVisible();
+
+      await blog.getByTestId("like-button").click();
+
+      const likesAtEnd = blog.getByText("likes: 1");
+      await expect(likesAtEnd).toBeVisible();
     });
   });
 });

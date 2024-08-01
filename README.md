@@ -27,7 +27,7 @@ Volvemos al frontend, primero repasamos diferentes posibilidades para probar el 
 - [x] 5.17 => d: Pruebas de extremo a extremo: Playwright
 - [x] 5.18 => d: Pruebas de extremo a extremo: Playwright
 - [x] 5.19 => d: Pruebas de extremo a extremo: Playwright
-- [ ] 5.20 => d: Pruebas de extremo a extremo: Playwright
+- [x] 5.20 => d: Pruebas de extremo a extremo: Playwright
 - [ ] 5.21 => d: Pruebas de extremo a extremo: Playwright
 - [ ] 5.22 => d: Pruebas de extremo a extremo: Playwright
 - [ ] 5.23 => d: Pruebas de extremo a extremo: Playwright
