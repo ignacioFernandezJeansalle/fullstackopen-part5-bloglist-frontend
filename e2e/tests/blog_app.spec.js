@@ -91,5 +91,23 @@ describe("Blogs app", () => {
       const likesAtEnd = blog.getByText("likes: 1");
       await expect(likesAtEnd).toBeVisible();
     });
+
+    test("a blog can be deleted", async ({ page }) => {
+      await helper.createBlog(page, NEW_BLOG);
+
+      const numberOfBlogsAsStart = page.locator(".list-of-blogs").getByRole("listitem");
+      await expect(numberOfBlogsAsStart).toHaveCount(1);
+
+      const blog = page
+        .getByRole("listitem")
+        .filter({ hasText: `${NEW_BLOG.title.toUpperCase()} - ${NEW_BLOG.author}` });
+
+      await blog.getByTestId("view-button").click();
+
+      page.on("dialog", (dialog) => dialog.accept());
+      await blog.getByTestId("remove-button").click();
+
+      await expect(numberOfBlogsAsStart).toHaveCount(0);
+    });
   });
 });
