@@ -4,6 +4,10 @@ const loginWith = async (page, username, password) => {
   await page.getByRole("button", { name: "Login" }).click();
 };
 
+const logout = async (page) => {
+  await page.getByRole("button", { name: "Logout" }).click();
+};
+
 const createBlog = async (page, blog) => {
   await page.getByRole("button", { name: "Create new blog" }).click();
 
@@ -13,4 +17,4 @@ const createBlog = async (page, blog) => {
   await page.getByTestId("submit-button").click();
 };
 
-export default { loginWith, createBlog };
+export default { loginWith, logout, createBlog };
