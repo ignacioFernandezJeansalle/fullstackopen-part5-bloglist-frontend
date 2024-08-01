@@ -7,6 +7,12 @@ const USER_TEST = {
   password: "e2ePassword",
 };
 
+const OTHER_USER_TEST = {
+  name: "e2e other user",
+  username: "e2e other username",
+  password: "e2ePassword",
+};
+
 const NEW_BLOG = {
   title: "new test blog title",
   author: "new test blog author",
@@ -108,6 +114,31 @@ describe("Blogs app", () => {
       await blog.getByTestId("remove-button").click();
 
       await expect(numberOfBlogsAsStart).toHaveCount(0);
+    });
+
+    test("only the creator of the blog can see the delete button", async ({ page, request }) => {
+      await helper.createBlog(page, NEW_BLOG);
+
+      const blog = page
+        .getByRole("listitem")
+        .filter({ hasText: `${NEW_BLOG.title.toUpperCase()} - ${NEW_BLOG.author}` });
+
+      await page.pause();
+      await blog.getByTestId("view-button").click();
+      await expect(blog.getByTestId("remove-button")).toBeVisible();
+
+      await helper.logout(page);
+
+      // create an alternative user
+      await request.post("/api/users", {
+        data: OTHER_USER_TEST,
+      });
+
+      await helper.loginWith(page, OTHER_USER_TEST.username, OTHER_USER_TEST.password);
+
+      await blog.getByTestId("view-button").click();
+      await expect(blog.getByText("likes: 0")).toBeVisible();
+      await expect(blog.getByTestId("remove-button")).not.toBeVisible();
     });
   });
 });
