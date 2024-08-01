@@ -47,4 +47,35 @@ describe("Blogs app", () => {
       await expect(page.getByText(USER_TEST.name)).not.toBeVisible();
     });
   });
+
+  describe("When logged in", () => {
+    beforeEach(async ({ page }) => {
+      await helper.loginWith(page, USER_TEST.username, USER_TEST.password);
+    });
+
+    test("a new blog can be created", async ({ page }) => {
+      const NEW_BLOG = {
+        title: "new test blog title",
+        author: "new test blog author",
+        url: "www.newblogtest.com",
+      };
+
+      await page.getByRole("button", { name: "Create new blog" }).click();
+
+      await page.getByTestId("title").fill(NEW_BLOG.title);
+      await page.getByTestId("author").fill(NEW_BLOG.author);
+      await page.getByTestId("url").fill(NEW_BLOG.url);
+      await page.getByTestId("submit-button").click();
+
+      const notification = page.locator(".notification");
+      await expect(notification).toContainText(`A new blog: ${NEW_BLOG.title} by ${NEW_BLOG.author}`);
+      await expect(notification).toHaveCSS("border-style", "solid");
+      await expect(notification).toHaveCSS("color", "rgb(0, 128, 0)");
+
+      const blog = page
+        .getByRole("listitem")
+        .filter({ hasText: `${NEW_BLOG.title.toUpperCase()} - ${NEW_BLOG.author}` });
+      await expect(blog).toBeVisible();
+    });
+  });
 });
