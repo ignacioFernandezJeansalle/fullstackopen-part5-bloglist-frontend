@@ -19,6 +19,24 @@ const NEW_BLOG = {
   url: "www.newblogtest.com",
 };
 
+const NEW_BLOGS = [
+  {
+    title: "new test blog title 1",
+    author: "new test blog author 1",
+    url: "www.newblogtest1.com",
+  },
+  {
+    title: "new test blog title 2",
+    author: "new test blog author 2",
+    url: "www.newblogtest2.com",
+  },
+  {
+    title: "new test blog title 3",
+    author: "new test blog author 3",
+    url: "www.newblogtest3.com",
+  },
+];
+
 describe("Blogs app", () => {
   beforeEach(async ({ page, request }) => {
     await request.post("/api/testing/reset");
@@ -139,6 +157,48 @@ describe("Blogs app", () => {
       await blog.getByTestId("view-button").click();
       await expect(blog.getByText("likes: 0")).toBeVisible();
       await expect(blog.getByTestId("remove-button")).not.toBeVisible();
+    });
+
+    test("blogs are ordered by likes", async ({ page }) => {
+      // Create many blogs and check that they are visible
+      for (const newBlog of NEW_BLOGS) {
+        await helper.createBlog(page, newBlog);
+
+        const locatorNewBlog = page
+          .getByRole("listitem")
+          .filter({ hasText: `${newBlog.title.toUpperCase()} - ${newBlog.author}` });
+        await expect(locatorNewBlog).toBeVisible();
+      }
+
+      const locatorListItem = page.locator(".list-of-blogs").getByRole("listitem");
+
+      // Click view button for all blogs
+      for (const viewButton of await locatorListItem.getByTestId("view-button").all()) {
+        await viewButton.click();
+      }
+
+      // Click like button to the blogs, once for the first, twice for the second one ...
+      let likes = 1;
+      for (const blog of NEW_BLOGS) {
+        for (let i = 0; i < likes; i++) {
+          const locatorBlog = locatorListItem.filter({ hasText: blog.title.toUpperCase() });
+          const likeButton = locatorBlog.getByTestId("like-button");
+          await likeButton.click();
+
+          const likesNumber = locatorBlog.getByText(`likes: ${i + 1}`);
+          await expect(likesNumber).toBeVisible();
+        }
+        likes++;
+      }
+
+      // Check that the order of the blogs is exactly the reverse of the order in which they were created
+      let j = 0;
+      for (let i = NEW_BLOGS.length - 1; i >= 0; i--) {
+        await expect(
+          locatorListItem.nth(j).filter({ hasText: `${NEW_BLOGS[i].title.toUpperCase()} - ${NEW_BLOGS[i].author}` })
+        ).toBeVisible();
+        j++;
+      }
     });
   });
 });
